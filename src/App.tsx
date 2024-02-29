@@ -113,7 +113,8 @@ const InternalCalendar: React.ForwardRefRenderFunction<
     for (let i = 1; i <= fillNextDay; i++) {
       days.push(
         <div key={`gray-${42 - i}`} className="gray">
-          {new Date(date.getFullYear(), date.getMonth() + 1, i).getDate()}
+          {/* {new Date(date.getFullYear(), date.getMonth() + 1, i).getDate()} */}
+          {i}
         </div>
       );
     }
