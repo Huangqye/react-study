@@ -1,0 +1,49 @@
+.calendar {
+  margin: 0 auto;
+  border: 1px solid #aaa;
+  padding: 10px;
+  width: 300px;
+  height: 250px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.empty,
+.day {
+  width: calc(100% / 7);
+  text-align: center;
+  line-height: 30px;
+}
+
+
+.day:hover,
+.selected {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.father {
+  position: relative;
+  height: 300px;
+}
+
+.children {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50px;
+  background-color: red;
+}
