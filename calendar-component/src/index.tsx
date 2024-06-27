@@ -2,15 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import Calendar from "./Calendar";
-import dayjs from "dayjs";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Calendar value={dayjs("2024-6-24")}></Calendar>
+    <App />
   </React.StrictMode>
 );
 

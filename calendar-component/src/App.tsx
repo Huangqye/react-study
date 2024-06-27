@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Calendar from "./Calendar";
+import dayjs from "dayjs";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Calendar
+        value={dayjs("2024-6-26")}
+        // locale="en-US"
+        // dateInnerContent={(value) => {
+        //   return (
+        //     <div>
+        //       <p style={{ background: "yellowgreen", height: "30px" }}>
+        //         {value.format("YYYY/MM/DD")}
+        //       </p>
+        //     </div>
+        //   );
+        // }}
+      />
     </div>
   );
 }

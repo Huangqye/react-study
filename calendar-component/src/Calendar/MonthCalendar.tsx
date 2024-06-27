@@ -1,7 +1,14 @@
 import { Dayjs } from "dayjs";
 import { CalendarProps } from ".";
+import { useContext } from "react";
+import LocaleContext from "./LocaleContext";
+import allLocales from "./locale";
+import cs from "classnames";
 
-interface MonthCalendarProps extends CalendarProps {}
+interface MonthCalendarProps extends CalendarProps {
+  selectHandler?: (date: Dayjs) => void;
+  curMonth: Dayjs;
+}
 
 // 我已经拿到渲染的数据了
 function getAllDays(date: Dayjs) {
@@ -35,30 +42,87 @@ function getAllDays(date: Dayjs) {
 
   return daysInfo;
 }
-// 开始渲染
-function renderDays(days: Array<{ date: Dayjs; currentMonth: boolean }>) {
-  const rows = [];
-  for (let i = 0; i < 6; i++) {
-    const row = [];
-    // for(let j=0; )
-  }
-}
 
 function MonthCalendar(props: MonthCalendarProps) {
-  const weekList = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const localeContext = useContext(LocaleContext);
 
-  const allDays = getAllDays(props.value);
+  const { dateRender, dateInnerContent, value, selectHandler, curMonth } =
+    props;
+  const CalendarLocale = allLocales[localeContext.locale];
+  // const weekList = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const weekList = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+
+  const allDays = getAllDays(curMonth);
+
+  // 开始渲染 6行 每行7个
+  function renderDays(days: Array<{ date: Dayjs; currentMonth: boolean }>) {
+    const rows = [];
+    for (let i = 0; i < 6; i++) {
+      const row = [];
+      for (let j = 0; j < 7; j++) {
+        // 1 1 1 1 1 1 1
+        // 1 1 1 1 1 1 1
+        const item = days[i * 7 + j];
+        // 注意这里的空格
+        row[j] = (
+          <div
+            className={
+              "calendar-month-body-cell " +
+              (item.currentMonth ? "calendar-month-body-cell-current" : "")
+            }
+            onClick={() => selectHandler?.(item.date)}
+          >
+            {dateRender ? (
+              dateRender(item.date)
+            ) : (
+              <div className="calendar-month-body-cell-date">
+                <div
+                  className={cs(
+                    "calendar-month-body-cell-date-value",
+                    value.format("YYYY-MM-DD") ===
+                      item.date.format("YYYY-MM-DD")
+                      ? "calendar-month-body-cell-date-selected"
+                      : ""
+                  )}
+                >
+                  {item.date.date()}
+                </div>
+                <div className="calendar-month-cell-body-date-content">
+                  {dateInnerContent?.(item.date)}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
+      rows.push(row);
+    }
+    return rows.map((row) => (
+      <div className="calendar-month-body-row">{row}</div>
+    ));
+  }
 
   return (
-    <div className="calendar-month">
-      <div className="calendar-month-week-list">
-        {weekList.map((week) => (
-          <div className="calendar-month-week-list-item" key={week}>
-            {week}
-          </div>
-        ))}
+    <>
+      <div className="calendar-month">
+        <div className="calendar-month-week-list">
+          {weekList.map((week) => (
+            <div className="calendar-month-week-list-item" key={week}>
+              {CalendarLocale.week[week]}
+            </div>
+          ))}
+        </div>
+        {renderDays(allDays)}
       </div>
-    </div>
+    </>
   );
 }
 
